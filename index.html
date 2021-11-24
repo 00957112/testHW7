@@ -32,18 +32,15 @@
         }
     </style>
     <script type="text/javascript">
-
+        
         function start() {
             document.getElementById("addButton").addEventListener("click", adddata, false);
             document.getElementById("removeAllButton").addEventListener("click", remove, false);
-            show()
-        } let alldata;
+            show();
+        } let alldata;let deletestorage;
         function remove() {
-            for (let i = localStorage.length - 1; i >= 0; i--) {
-                if (localStorage.key(i).substring(0, 5) == "ntou-") {
-
-                    localStorage.removeItem(localStorage.key(i));
-                }
+            for (let i =0; i<deletestorage.length; i++) {
+                 localStorage.removeItem(deletestorage[i]);
             }
             show();
             window.alert("All items were removed!");
@@ -57,11 +54,12 @@
         function show() {
             let length = localStorage.length;
             let insidetext = "<table><tr><th>Title</th><th>Author</th><th>Year</th><th>URL</th></tr>";
-            alldata = [];
+            alldata = [];deletestorage=[];
             let odd = 0;
             for (let i = 0; i < length; ++i) {
                 if (localStorage.key(i).substring(0, 5) == "ntou-") {
                     alldata[i] = JSON.parse(localStorage.getItem(localStorage.key(i)));
+                    deletestorage[odd]=localStorage.key(i); 
                     if (odd % 2 != 0) {
                         insidetext += "<tr class='oddrow'><td>" + alldata[i].title + "</td><td>" + alldata[i].author + "</td><td>" + alldata[i].year + "</td><td><a href=" + alldata[i].url + " target='_blank'>" + alldata[i].url + "</a></td></tr>";
                     }
